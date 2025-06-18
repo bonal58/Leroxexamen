@@ -129,7 +129,7 @@ public function photos()
 ## BL-K2-W1: Voert overleg
 
 ### Communicatie
-- Regelmatige afstemming met stakeholders
+- Regelmatige afstemming met Beoordelaarss
 - Duidelijke communicatie over voortgang
 - Verzamelen van feedback
 

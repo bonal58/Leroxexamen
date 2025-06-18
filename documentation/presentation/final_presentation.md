@@ -241,7 +241,7 @@ return [
 ### BL-K2-W1: Voert overleg
 
 #### Communicatie en Overleg
-- Regelmatige afstemming met stakeholders
+- Regelmatige afstemming met Beoordelaarss
 - Duidelijke communicatie over voortgang en uitdagingen
 - Verzamelen van feedback en vereisten
 - Vastlegging van beslissingen en actiepunten
