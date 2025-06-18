@@ -23,16 +23,11 @@ Berkay Onal | 18 juni 2025
   3. Implementatie
   4. Testen & documentatie
 
-### Voortgangsbewaking
-- Dagelijkse voortgangscontrole
-- Prioritering van kernelementen
-
 ---
 
 ## BL-K1-W2: Ontwerpt software
 
 ### Database Ontwerp
-![Database Ontwerp](../diagrams/entity_relationship_diagram.md)
 - Relationeel model met MySQL
 - Polymorfische relaties voor foto's
 
@@ -54,36 +49,8 @@ Berkay Onal | 18 juni 2025
 ### Kernfunctionaliteiten
 1. Gebruikersbeheer & autorisatie
 2. Scooter- en onderdelenbeheer (CRUD)
-3. Meervoudig foto-uploadsysteem
+3. Meervoudig foto-uploadsysteem met polymorfische relaties
 4. Meertaligheid (NL/EN)
-
----
-
-### Polymorfische Foto-relatie
-
-```php
-// Photo.php model
-class Photo extends Model
-{
-    protected $fillable = ['path', 'is_primary'];
-
-    public function photoable()
-    {
-        return $this->morphTo();
-    }
-}
-
-// In Scooter.php & Part.php
-public function photos()
-{
-    return $this->morphMany(Photo::class, 'photoable');
-}
-```
-
-### Moderne UI
-- Bootstrap met custom CSS
-- Responsief ontwerp
-- Consistente styling en branding
 
 ---
 
@@ -129,7 +96,7 @@ public function photos()
 ## BL-K2-W1: Voert overleg
 
 ### Communicatie
-- Regelmatige afstemming met Beoordelaarss
+- Regelmatige afstemming met Beoordelaars
 - Duidelijke communicatie over voortgang
 - Verzamelen van feedback
 
@@ -149,10 +116,10 @@ public function photos()
 - Beheerdersfunctionaliteiten
 
 ### Technische Highlights
-- Polymorfische relaties
-- Meertaligheid implementatie
-- Moderne, responsieve UI
-- Beveiligde authenticatie
+- Polymorfische relaties voor foto's
+  - Eén foto-model voor meerdere entiteiten
+  - Efficiënt databaseontwerp
+  - Herbruikbare code
 
 ---
 
