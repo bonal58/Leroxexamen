@@ -52,6 +52,14 @@ Berkay Onal | 19 juni 2025
 - **Database**: MySQL 8.0
 - **Frontend**: Blade templates, Bootstrap 5, JavaScript
 
+### Gebruikte Codeertalen
+- **PHP 8.1**: Backend logica, controllers, models en services
+- **SQL**: Database queries, migraties en seeds
+- **HTML/CSS**: Frontend structuur en styling
+- **JavaScript**: Interactieve elementen zoals foto-upload
+- **Blade**: Laravel's template engine voor dynamische views
+- **JSON**: API responses en configuratiebestanden
+
 ### Kernfunctionaliteiten
 1. Gebruikersbeheer & rolgebaseerde autorisatie
 2. Scooter- en onderdelenbeheer (CRUD)
