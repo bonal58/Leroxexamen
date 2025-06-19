@@ -29,6 +29,15 @@
                         </div>
                         
                         <div class="mb-3">
+                            <label for="sku" class="form-label">{{ __('messages.sku') ?? 'SKU' }} <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control @error('sku') is-invalid @enderror" id="sku" name="sku" value="{{ old('sku') }}" required>
+                            <div class="form-text">Uniek artikelnummer (Stock Keeping Unit)</div>
+                            @error('sku')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        
+                        <div class="mb-3">
                             <label for="description" class="form-label">{{ __('messages.description') }} <span class="text-danger">*</span></label>
                             <textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description" rows="4" required>{{ old('description') }}</textarea>
                             @error('description')

@@ -39,6 +39,7 @@ class PartController extends Controller
             'category' => 'required|string|max:255',
             'description' => 'required|string',
             'price' => 'required|numeric|min:0',
+            'sku' => 'required|string|max:255|unique:parts',
             'stock' => 'required|integer|min:0',
             'photos' => 'nullable|array',
             'photos.*' => 'image|max:2048',
