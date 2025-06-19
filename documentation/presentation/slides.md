@@ -1,6 +1,6 @@
 # Lerox Motoren
 ## Examenopdracht Presentatie
-Berkay Onal | 18 juni 2025
+Berkay Onal | 19 juni 2025
 
 ---
 
@@ -16,12 +16,17 @@ Berkay Onal | 18 juni 2025
 - **Doel**: Moderne website voor scooterverkoop met fotobeheer
 
 ### Planning & Methodiek
-- Incrementele ontwikkeling
-- Duidelijke fasering:
+- Incrementele ontwikkeling met duidelijke mijlpalen
+- Gestructureerde fasering:
   1. Analyse & requirements
   2. Ontwerp (database, UI)
   3. Implementatie
   4. Testen & documentatie
+
+### Voortgangsbewaking
+- Dagelijkse voortgangscontrole
+- Prioritering van kernelementen
+- Bijhouden van openstaande taken
 
 ---
 
@@ -30,12 +35,13 @@ Berkay Onal | 18 juni 2025
 ### Database Ontwerp
 - Relationeel model met MySQL
 - Polymorfische relaties voor foto's
+- Efficiënte indexering voor snelle zoekopdrachten
 
 ### Diagrammen
-- Entity Relationship Diagram
-- Klassendiagram
-- Use Case Diagram
-- Sequence Diagram voor foto-upload
+- Entity Relationship Diagram (ERD)
+- Klassendiagram met alle modellen en relaties
+- Use Case Diagram voor gebruikersinteracties
+- Sequence Diagram voor foto-upload proces
 
 ---
 
@@ -43,18 +49,43 @@ Berkay Onal | 18 juni 2025
 
 ### Technische Stack
 - **Backend**: Laravel 10.x, PHP 8.1
-- **Database**: MySQL
-- **Frontend**: Blade, Bootstrap, JavaScript
+- **Database**: MySQL 8.0
+- **Frontend**: Blade templates, Bootstrap 5, JavaScript
 
 ### Kernfunctionaliteiten
-1. Gebruikersbeheer & autorisatie
+1. Gebruikersbeheer & rolgebaseerde autorisatie
 2. Scooter- en onderdelenbeheer (CRUD)
 3. Meervoudig foto-uploadsysteem met polymorfische relaties
-4. Meertaligheid (NL/EN)
+4. Meertaligheid (Nederlands/Engels)
+
+### Code Implementatie
+```php
+// Photo.php model
+class Photo extends Model
+{
+    protected $fillable = ['path', 'is_primary'];
+
+    public function photoable()
+    {
+        return $this->morphTo();
+    }
+}
+
+// In Scooter.php & Part.php
+public function photos()
+{
+    return $this->morphMany(Photo::class, 'photoable');
+}
+```
 
 ---
 
 ## BL-K1-W4: Test software
+
+### Testplan & Uitvoering
+- Systematische testaanpak met gedocumenteerde testscenario's
+- Functionele, gebruikers-, beveiligings- en performancetests
+- Geautomatiseerde tests voor kritieke functionaliteit
 
 ### Testresultaten
 - **Functionele tests**: 100% geslaagd
@@ -64,28 +95,28 @@ Berkay Onal | 18 juni 2025
 - **Performancetests**: 80% geslaagd
 - **Totaal**: 98% geslaagd
 
-### Gevonden Probleem
-- Laadtijd detailpagina's met meerdere foto's: 4.7s (> 4s)
+### Gevonden Probleem & Oplossing
+- Probleem: Laadtijd detailpagina's met meerdere foto's: 4.7s (> 4s)
 - Oplossing: Lazy loading, afbeeldingsoptimalisatie, caching
 
 ---
 
 ## BL-K1-W5: Doet verbetervoorstellen voor de software
 
-### Korte Termijn
-- Geavanceerde zoekfunctie
-- Favorieten functionaliteit
-- Verbeterde fotogalerij
+### Korte Termijn Verbeteringen
+- Geavanceerde zoekfunctie met filters
+- Favorieten functionaliteit voor gebruikers
+- Verbeterde fotogalerij met zoom en carousel
 
-### Middellange Termijn
-- Beoordelingssysteem
-- Reserveringssysteem
-- Uitbreiding meertaligheid
+### Middellange Termijn Verbeteringen
+- Beoordelingssysteem voor scooters
+- Reserveringssysteem voor proefritten
+- Uitbreiding meertaligheid (Duits, Frans)
 
-### Lange Termijn
-- Betalingssysteem integratie
-- Mobiele app ontwikkeling
-- Chatbot implementatie
+### Lange Termijn Verbeteringen
+- Betalingssysteem integratie (Mollie, Stripe)
+- Mobiele app ontwikkeling (iOS/Android)
+- Chatbot implementatie voor klantenservice
 
 ---
 
@@ -97,57 +128,62 @@ Berkay Onal | 18 juni 2025
 
 ### Communicatie
 - Regelmatige afstemming met Beoordelaars
-- Duidelijke communicatie over voortgang
-- Verzamelen van feedback
+- Duidelijke communicatie over voortgang en uitdagingen
+- Verzamelen van feedback en verwerking hiervan
 
 ### Samenwerking
-- Versiebeheer met Git
-- Documentatie van ontwerpbeslissingen
-- Kennisdeling en best practices
+- Versiebeheer met Git en GitHub
+- Uitgebreide documentatie van ontwerpbeslissingen
+- Kennisdeling en toepassing van best practices
 
 ---
 
 ## BL-K2-W2: Presenteert het opgeleverde werk
 
 ### Demonstratie
-- Homepage en navigatie
-- Scooter- en onderdelencatalogus
-- Meervoudig fotobeheer
-- Beheerdersfunctionaliteiten
+- Homepage en navigatiestructuur
+- Scooter- en onderdelencatalogus met filteropties
+- Meervoudig fotobeheer met primaire foto selectie
+- Beheerdersfunctionaliteiten en dashboard
 
 ### Technische Highlights
 - Polymorfische relaties voor foto's
-  - Eén foto-model voor meerdere entiteiten
-  - Efficiënt databaseontwerp
-  - Herbruikbare code
+  - Eén foto-model voor meerdere entiteiten (Scooters, Onderdelen)
+  - Efficiënt databaseontwerp zonder duplicatie
+  - Herbruikbare code voor upload en beheer
+- Beveiligde authenticatie en autorisatie
+- Responsief ontwerp voor alle apparaten
 
 ---
 
 ## BL-K2-W3: Reflecteert op het werk
 
 ### Wat ging goed?
-- Implementatie meertaligheid
-- Polymorfische relaties voor foto's
+- Implementatie meertaligheid met Laravel's taalfuncties
+- Polymorfische relaties voor foto's met efficiënte database-opslag
 - Moderne UI met Bootstrap en custom CSS
+- Gestructureerde projectaanpak en documentatie
 
 ### Wat kon beter?
-- Planning van complexe functionaliteiten
-- Code organisatie
-- Automatische tests
+- Planning van complexe functionaliteiten zoals foto-upload
+- Code organisatie en herbruikbaarheid van componenten
+- Automatische tests voor kritieke functionaliteit
+- Performanceoptimalisatie voor afbeeldingen
 
 ### Leerpunten
-- Laravel Eloquent relaties
-- Frontend development
-- Efficiënt projectmanagement
+- Laravel Eloquent relaties en polymorfische verbindingen
+- Frontend development met responsive design
+- Efficiënt projectmanagement en documentatie
+- Testgedreven ontwikkeling
 
 ---
 
 # Conclusie
 
 - Succesvolle ontwikkeling van functionele webapplicatie
-- Alle projectdoelstellingen behaald
-- Moderne, gebruiksvriendelijke interface
-- Solide basis voor toekomstige uitbreidingen
+- Alle projectdoelstellingen behaald binnen de gestelde termijn
+- Moderne, gebruiksvriendelijke interface met meertalige ondersteuning
+- Solide basis voor toekomstige uitbreidingen en verbeteringen
 
 ---
 
