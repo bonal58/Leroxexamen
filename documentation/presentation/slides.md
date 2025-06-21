@@ -23,17 +23,17 @@ Berkay Onal | 19 juni 2025
   3. Implementatie (26-29 mei)
   4. Testen & documentatie (29-31 mei)
 
-### Wat ik heb gemaakt voor planning
-- **Planning schema**: Overzicht van alle taken en deadlines
-- **Dagplanning**: Wat ik elke dag wilde doen
-- **Takenlijst**: Lijst met alle taken op volgorde van belang
-- **Urenlijst**: Hoeveel tijd ik aan elke taak heb besteed
+### Planningsdocumentatie
+- **Gantt chart**: Visuele weergave van projectfasen en deadlines
+- **Sprint planning**: Iteratieve planning met dagelijkse en wekelijkse doelen
+- **Geprioriteerde backlog**: Gestructureerde takenlijst volgens prioriteit
+- **Tijdsregistratie**: Gedetailleerde urenverantwoording per projectonderdeel
 
-### Hoe ik bijhield wat er gedaan was
-- Elke dag checken wat af was
-- Belangrijke dingen eerst doen
-- Lijst bijhouden van wat nog moet
-- Elke dag even nadenken over wat ik ga doen
+### Voortgangsbewaking
+- Dagelijkse voortgangsregistratie met burn-down chart
+- Prioritering volgens MoSCoW-methode
+- Systematisch bijhouden van openstaande taken
+- Dagelijkse stand-up methodiek voor zelforganisatie
 
 ---
 
@@ -45,18 +45,18 @@ Berkay Onal | 19 juni 2025
 - Efficiënte indexering voor snelle zoekopdrachten
 - Normalisatie tot 3NF voor optimale data-integriteit
 
-### Wat ik heb gemaakt voor het ontwerp
-- **Functie-beschrijving**: Wat de website allemaal moet kunnen
-- **Technisch plan**: Hoe ik alles ga bouwen
-- **Schetsontwerpen**: Simpele tekeningen van alle pagina's
-- **Mooie ontwerpen**: Nette versies met kleuren en knoppen
+### Ontwerpdocumentatie
+- **Functioneel ontwerp**: Specificatie van alle functionele vereisten
+- **Technisch ontwerp**: Architectuur en technische specificaties
+- **Wireframes**: Low-fidelity ontwerpen van alle kernpagina's
+- **UI mockups**: High-fidelity ontwerpen met huisstijl en interface-elementen
 
-### Tekeningen die ik heb gemaakt
-- **Database tekening**: Hoe alle tabellen met elkaar verbonden zijn
-- **Code tekening**: Hoe alle onderdelen van de code samenwerken
-- **Gebruiker tekening**: Wat gebruikers kunnen doen op de site
-- **Stappen tekening**: Hoe foto's worden geüpload
-- **Proces tekening**: Hoe bestellen en productbeheer werkt
+### Technische diagrammen
+- **Entity Relationship Diagram (ERD)**: Databasestructuur met relaties
+- **Klassendiagram**: Objectgeoriënteerde structuur met attributen en methodes
+- **Use Case Diagram**: Gebruikersinteracties per rol
+- **Sequence Diagram**: Procesflow voor foto-upload functionaliteit
+- **Activity Diagram**: Werkstroom voor bestelproces en productbeheer
 
 ---
 
@@ -68,12 +68,12 @@ Berkay Onal | 19 juni 2025
 - **Frontend**: Blade templates, Bootstrap 5, JavaScript
 - **Versiebeheer**: Git met GitHub
 
-### Wat ik heb gemaakt tijdens het bouwen
-- **Code**: PHP-code met Nederlandse uitleg erbij
-- **Database**: Alle tabellen en voorbeeld-data
-- **Handleiding**: Uitleg hoe je de website gebruikt
-- **Technische uitleg**: Hoe alles in elkaar zit
-- **Installatie uitleg**: Hoe je de website kunt installeren
+### Implementatieproducten
+- **Broncode**: Volledig gedocumenteerde PHP-code met Nederlandse commentaren
+- **Database**: Geïmplementeerd databaseschema met seeders voor testdata
+- **Gebruikershandleiding**: Instructiedocumentatie voor eindgebruikers
+- **Technische documentatie**: Architectuur en implementatiedetails
+- **Deployment handleiding**: Installatie- en configuratieprocedures
 
 ### Gebruikte Codeertalen
 - **PHP 8.1**: Backend logica, controllers, models en services
@@ -119,11 +119,11 @@ public function photos()
 - Functionele, gebruikers-, beveiligings- en performancetests
 - Geautomatiseerde tests voor kritieke functionaliteit
 
-### Wat ik heb gemaakt voor het testen
-- **Testplan**: Lijst met alles wat ik wilde testen
-- **Testcode**: Tests die automatisch controleren of alles werkt
-- **Testverslag**: Wat er goed en fout ging bij het testen
-- **Gebruikerstests**: Feedback van mensen die de site hebben geprobeerd
+### Testdocumentatie
+- **Testplan**: Gedetailleerde testscenario's en acceptatiecriteria
+- **Testscripts**: Geautomatiseerde PHPUnit tests voor modellen en controllers
+- **Testrapport**: Resultaten en bevindingen van alle uitgevoerde tests
+- **Gebruikersacceptatietests**: Systematische feedback van eindgebruikers
 
 ### Testresultaten
 - **Functionele tests**: 100% geslaagd (42/42 testcases)
@@ -134,41 +134,41 @@ public function photos()
 - **Performancetests**: 80% geslaagd (8/10 benchmarks)
 - **Totaal**: 96% geslaagd (118/123 tests)
 
-### Problemen die ik vond en hoe ik ze oploste
-- **Probleem 1**: Pagina's met veel foto's laden te langzaam
-  - **Oplossing**: Foto's pas laden als ze nodig zijn en kleiner maken
-- **Probleem 2**: Fout bij verwijderen van onderdelen die bij scooters horen
-  - **Oplossing**: Code toegevoegd die alles netjes samen verwijdert
-- **Probleem 3**: Beveiligingsprobleem in contactformulier
-  - **Oplossing**: Extra beveiliging toegevoegd
+### Geïdentificeerde problemen en oplossingen
+- **Performance issue**: Laadtijd detailpagina's met meerdere foto's (4.7s > target)
+  - **Oplossing**: Implementatie van lazy loading, afbeeldingsoptimalisatie en caching
+- **Referentiële integriteit**: Inconsistentie bij verwijderen van gekoppelde entiteiten
+  - **Oplossing**: Implementatie van cascading delete en validatiemechanismen
+- **Beveiligingskwetsbaarheid**: CSRF-risico in contactformulier
+  - **Oplossing**: Implementatie van Laravel CSRF-bescherming
 
 ---
 
 ## BL-K1-W5: Doet verbetervoorstellen voor de software
 
-### Wat ik heb gemaakt voor verbeteringen
-- **Verbeterlijst**: Ideeën om de website beter te maken
-- **Kosten en voordelen**: Wat kost het en wat levert het op
-- **Belangrijkheid lijst**: Welke verbeteringen zijn het belangrijkst
-- **Planning**: Wanneer kunnen we welke verbeteringen doen
+### Verbeterdocumentatie
+- **Verbetervoorstel document**: Gedetailleerde analyse en aanbevelingen
+- **Kosten-batenanalyse**: ROI-berekeningen voor voorgestelde verbeteringen
+- **Prioriteitenmatrix**: Classificatie van verbeteringen op impact en complexiteit
+- **Roadmap**: Tijdlijn voor implementatie van verbeteringen
 
-### Verbeteringen voor binnenkort (1-3 maanden)
-- Betere zoekfunctie met filters
-- Favorieten kunnen opslaan
-- Mooiere fotogalerij met zoom
-- Website sneller maken
+### Korte termijn verbeteringen (1-3 maanden)
+- Geavanceerde zoekfunctionaliteit met dynamische filters
+- Implementatie van gebruikers-favorieten functionaliteit
+- Verbeterde fotogalerij met zoom en carousel functionaliteit
+- Performance optimalisaties voor snellere laadtijden
 
-### Verbeteringen voor over een tijdje (3-6 maanden)
-- Reviews kunnen geven voor scooters
-- Online afspraken kunnen maken
-- Meer talen toevoegen (Duits, Frans)
-- Producten kunnen delen op social media
+### Middellange termijn verbeteringen (3-6 maanden)
+- Beoordelingssysteem voor scooters en onderdelen
+- Reserveringssysteem voor proefritten en onderhoud
+- Uitbreiding meertaligheid (Duits, Frans)
+- Integratie met sociale media voor delen van producten
 
-### Verbeteringen voor later (6-12 maanden)
-- Online kunnen betalen
-- Een app maken
-- Chatbot voor vragen
-- AR om scooters virtueel te bekijken
+### Lange termijn verbeteringen (6-12 maanden)
+- Betalingssysteem integratie (Mollie, Stripe)
+- Mobiele applicatie ontwikkeling (iOS/Android)
+- Chatbot implementatie voor klantenservice
+- Augmented Reality functie voor virtuele productbezichtiging
 
 ---
 
@@ -178,33 +178,33 @@ public function photos()
 
 ## BL-K2-W1: Voert overleg
 
-### Wat ik heb gemaakt voor overleg
-- **Gespreksverslagen**: Wat we hebben besproken
-- **Besluitenlijst**: Welke keuzes we hebben gemaakt en waarom
-- **Feedbacklijst**: Wat anderen vonden en wat ik ermee heb gedaan
-- **Communicatieplan**: Hoe we met elkaar praten
+### Overlegdocumentatie
+- **Vergaderverslagen**: Documentatie van alle overlegmomenten
+- **Besluitenlijst**: Overzicht van genomen beslissingen en rationale
+- **Feedbackdocument**: Verzamelde feedback en verwerking hiervan
+- **Communicatieplan**: Structuur voor effectieve communicatie
 
-### Hoe ik heb gecommuniceerd
-- Elke week overleg met beoordelaars
-- Duidelijk vertellen hoe het gaat en wat lastig is
-- Vragen om feedback en er iets mee doen
-- Netjes communiceren via mail en andere tools
+### Communicatiemethodiek
+- Regelmatige afstemming met beoordelaars (wekelijks)
+- Transparante rapportage over voortgang en uitdagingen
+- Proactieve verzameling en verwerking van feedback
+- Professionele communicatie via e-mail en projectmanagement tools
 
-### Hoe ik heb samengewerkt
-- Code netjes bijhouden met Git
-- Goed opschrijven waarom ik bepaalde keuzes maak
-- Kennis delen en goede manieren gebruiken
-- Problemen goed oplossen
+### Samenwerkingsmethodiek
+- Versiebeheer met Git en GitHub
+- Uitgebreide documentatie van ontwerpbeslissingen
+- Kennisdeling en toepassing van best practices
+- Effectieve conflictoplossing bij technische uitdagingen
 
 ---
 
 ## BL-K2-W2: Presenteert het opgeleverde werk
 
-### Wat ik heb gemaakt voor de presentatie
-- **Deze slides**: Om te laten zien wat ik heb gedaan
-- **Live demo**: De werkende website laten zien
-- **Video**: Filmpje van hoe de website werkt
-- **Handleiding**: Uitleg met plaatjes voor gebruikers
+### Presentatieproducten
+- **Presentatieslides**: Deze visuele presentatie met kernpunten
+- **Live demonstratie**: Werkende applicatie in productieomgeving
+- **Screencast video**: Opname van kernfunctionaliteiten
+- **Gebruikershandleiding**: Visuele instructies voor eindgebruikers
 
 ### Demonstratie
 - Homepage en navigatiestructuur
@@ -213,45 +213,45 @@ public function photos()
 - Beheerdersfunctionaliteiten en dashboard
 - Meertaligheid en responsief ontwerp
 
-### Slimme technische oplossingen
-- Slim fotosysteem
-  - Één manier om foto's te gebruiken voor scooters en onderdelen
-  - Netjes opgeslagen zonder dubbele data
-  - Code die je vaker kunt gebruiken
-- Veilig inloggen en rechten
-- Website die goed werkt op telefoon en computer
-- Nederlandse uitleg in de code
+### Technische highlights
+- Polymorfische relaties voor foto's
+  - Één foto-model voor meerdere entiteiten (Scooters, Onderdelen)
+  - Efficiënt databaseontwerp zonder duplicatie
+  - Herbruikbare code voor upload en beheer
+- Beveiligde authenticatie en autorisatie
+- Responsief ontwerp voor alle apparaten
+- Uitgebreide Nederlandse documentatie in de code
 
 ---
 
 ## BL-K2-W3: Reflecteert op het werk
 
-### Wat ik heb gemaakt om terug te kijken
-- **Terugblikverslag**: Hoe ik vind dat het is gegaan
-- **Evaluatie**: Vergelijking tussen wat ik wilde en wat ik heb bereikt
-- **Leerpuntenlijst**: Wat ik heb geleerd
-- **Feedback**: Wat anderen van mijn werk vonden
+### Reflectiedocumentatie
+- **Reflectieverslag**: Gedetailleerde persoonlijke reflectie
+- **Evaluatiedocument**: Analyse van projectdoelen versus resultaten
+- **Leerpuntenlijst**: Concrete leerervaringen en toepassingen
+- **Peer review**: Feedback van collega's en stakeholders
 
-### Wat ging goed?
-- Website in meerdere talen maken
-- Slim fotosysteem maken dat goed werkt
-- Mooie website maken met Bootstrap
-- Netjes en geordend werken
-- Nederlandse uitleg in de code zetten
+### Succesfactoren
+- Implementatie meertaligheid met Laravel's taalfuncties
+- Polymorfische relaties voor foto's met efficiënte database-opslag
+- Moderne UI met Bootstrap en custom CSS
+- Gestructureerde projectaanpak en documentatie
+- Nederlandse commentaren voor verbeterde code-leesbaarheid
 
-### Wat kon beter?
-- Planning van moeilijke dingen zoals foto-upload
-- Code netter organiseren zodat je het vaker kunt gebruiken
-- Meer automatische tests maken
-- Website sneller maken met betere afbeeldingen
-- Eerder beginnen met dingen opschrijven
+### Verbeterpunten
+- Planning van complexe functionaliteiten zoals foto-upload
+- Code organisatie en herbruikbaarheid van componenten
+- Automatische tests voor kritieke functionaliteit
+- Performanceoptimalisatie voor afbeeldingen
+- Eerder beginnen met documentatie tijdens ontwikkeling
 
-### Wat ik heb geleerd
-- Werken met Laravel en databases
-- Websites maken die goed werken op alle apparaten
-- Goed plannen en alles netjes opschrijven
-- Testen maken voordat je code schrijft
-- Hoe belangrijk het is om code goed uit te leggen
+### Leerpunten
+- Laravel Eloquent relaties en polymorfische verbindingen
+- Frontend development met responsive design
+- Efficiënt projectmanagement en documentatie
+- Testgedreven ontwikkeling
+- Het belang van duidelijke code-documentatie in teamverband
 
 ---
 
@@ -263,31 +263,31 @@ public function photos()
 - Moderne, gebruiksvriendelijke interface met meertalige ondersteuning
 - Solide basis voor toekomstige uitbreidingen en verbeteringen
 
-## Wat ik heb gemaakt per onderdeel
+## Opgeleverde producten per werkproces
 
-### BL-K1-W1: Planning maken
-- Planning schema, dagplanning, takenlijst, urenlijst
+### BL-K1-W1: Plant werkzaamheden
+- Gantt chart, sprintplanning, geprioriteerde backlog, tijdsregistratie
 
-### BL-K1-W2: Ontwerpen maken
-- Functie-beschrijving, technisch plan, schetsontwerpen, mooie ontwerpen, verschillende tekeningen
+### BL-K1-W2: Ontwerpt software
+- Functioneel & technisch ontwerp, wireframes, mockups, diagrammen (ERD, klassen, use case, sequence, activity)
 
-### BL-K1-W3: Website bouwen
-- Code met uitleg, database, handleiding, technische uitleg, installatie uitleg
+### BL-K1-W3: Realiseert software
+- Volledig gedocumenteerde broncode, database, gebruikershandleiding, technische documentatie, deployment handleiding
 
-### BL-K1-W4: Website testen
-- Testplan, testcode, testverslag, gebruikerstests
+### BL-K1-W4: Test software
+- Testplan, testscripts, testrapport, gebruikersacceptatietests
 
-### BL-K1-W5: Verbeteringen bedenken
-- Lijst met verbeteringen, uitleg waarom ze nuttig zijn, planning voor verbeteringen
+### BL-K1-W5: Doet verbetervoorstellen
+- Verbetervoorstel document, kosten-batenanalyse, prioriteitenmatrix, roadmap
 
-### BL-K2-W1: Overleggen
-- Verslagen van gesprekken, lijst met beslissingen, verwerkte feedback
+### BL-K2-W1: Voert overleg
+- Vergaderverslagen, besluitenlijst, feedbackdocument, communicatieplan
 
-### BL-K2-W2: Presenteren
-- Deze slides, demo van de website, video van de website, handleiding
+### BL-K2-W2: Presenteert werk
+- Presentatieslides, live demonstratie, screencast video, gebruikershandleiding
 
-### BL-K2-W3: Terugkijken
-- Verslag over wat ik heb geleerd, wat goed ging en wat beter kon
+### BL-K2-W3: Reflecteert op werk
+- Reflectieverslag, evaluatiedocument, leerpuntenlijst, peer review
 
 ---
 
