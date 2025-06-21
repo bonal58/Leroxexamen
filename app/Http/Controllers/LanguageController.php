@@ -7,6 +7,14 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Config;
 
+/**
+ * LanguageController
+ * 
+ * Deze controller behandelt alle acties met betrekking tot taalwisseling in het systeem.
+ * Hiermee kunnen gebruikers schakelen tussen de beschikbare talen (Nederlands en Engels).
+ * De geselecteerde taal wordt opgeslagen in de sessie en ook bijgewerkt in het .env bestand
+ * om de standaardtaal voor de applicatie in te stellen.
+ */
 class LanguageController extends Controller
 {
     /**

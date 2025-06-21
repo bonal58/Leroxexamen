@@ -8,11 +8,24 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
+/**
+ * ScooterController
+ * 
+ * Deze controller behandelt alle acties met betrekking tot scooters in het systeem,
+ * inclusief het weergeven, aanmaken, bewerken en verwijderen van scooters.
+ * Ook het beheer van foto's voor scooters wordt hier afgehandeld.
+ */
 class ScooterController extends Controller
 {
     
     /**
-     * Display a listing of the resource.
+     * Toon een lijst van alle scooters
+     * 
+     * Deze methode haalt alle scooters op uit de database, sorteert ze eerst op 'featured'
+     * (uitgelichte scooters eerst) en daarna op naam. De resultaten worden gepagineerd
+     * met 12 scooters per pagina om de prestaties te optimaliseren.
+     * 
+     * @return \Illuminate\View\View
      */
     public function index()
     {
@@ -21,7 +34,12 @@ class ScooterController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Toon het formulier voor het aanmaken van een nieuwe scooter
+     * 
+     * Deze methode toont het formulier waarmee een beheerder een nieuwe scooter kan toevoegen.
+     * Alleen geautoriseerde gebruikers kunnen deze pagina bekijken (afgehandeld door middleware).
+     * 
+     * @return \Illuminate\View\View
      */
     public function create()
     {
@@ -29,7 +47,27 @@ class ScooterController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Sla een nieuw aangemaakte scooter op in de database
+     * 
+     * Deze methode valideert eerst alle ingevoerde gegevens volgens de opgegeven regels.
+     * Vervolgens wordt een nieuwe scooter aangemaakt met de gevalideerde gegevens.
+     * Als er foto's zijn geüpload, worden deze opgeslagen en gekoppeld aan de scooter.
+     * 
+     * Validatieregels:
+     * - name: verplicht, tekst, maximaal 255 tekens
+     * - brand: verplicht, tekst, maximaal 255 tekens
+     * - model: verplicht, tekst, maximaal 255 tekens
+     * - description: verplicht, tekst
+     * - price: verplicht, numeriek, minimaal 0
+     * - year: verplicht, geheel getal, tussen 1900 en volgend jaar
+     * - color: verplicht, tekst, maximaal 255 tekens
+     * - stock: verplicht, geheel getal, minimaal 0
+     * - photos: optioneel, array
+     * - photos.*: afbeelding, maximaal 2MB
+     * - featured: boolean
+     * 
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
@@ -86,7 +124,13 @@ class ScooterController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Toon de gespecificeerde scooter
+     * 
+     * Deze methode toont de detailpagina van een specifieke scooter.
+     * De compatibele onderdelen worden vooraf geladen (eager loading) om N+1 query problemen te voorkomen.
+     * 
+     * @param  \App\Models\Scooter  $scooter
+     * @return \Illuminate\View\View
      */
     public function show(Scooter $scooter)
     {
@@ -97,7 +141,13 @@ class ScooterController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Toon het formulier voor het bewerken van een scooter
+     * 
+     * Deze methode toont het formulier waarmee een beheerder een bestaande scooter kan bewerken.
+     * Alleen geautoriseerde gebruikers kunnen deze pagina bekijken (afgehandeld door middleware).
+     * 
+     * @param  \App\Models\Scooter  $scooter
+     * @return \Illuminate\View\View
      */
     public function edit(Scooter $scooter)
     {
@@ -105,7 +155,15 @@ class ScooterController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Werk de gespecificeerde scooter bij in de database
+     * 
+     * Deze methode valideert eerst alle ingevoerde gegevens volgens de opgegeven regels.
+     * Vervolgens wordt de bestaande scooter bijgewerkt met de gevalideerde gegevens.
+     * Als er nieuwe foto's zijn geüpload, worden deze opgeslagen en gekoppeld aan de scooter.
+     * 
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Scooter  $scooter
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, Scooter $scooter)
     {
@@ -186,11 +244,19 @@ class ScooterController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Verwijder de gespecificeerde scooter uit de database
+     * 
+     * Deze methode verwijdert een scooter en alle bijbehorende gegevens uit het systeem.
+     * Eerst worden alle gekoppelde foto's verwijderd van de schijf en uit de database.
+     * Daarna wordt de scooter zelf verwijderd. De methode zorgt ervoor dat er geen
+     * weesbestanden of -records achterblijven in het systeem.
+     * 
+     * @param  \App\Models\Scooter  $scooter  De te verwijderen scooter
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Scooter $scooter)
     {
-        // Verwijder alle foto's
+        // Verwijder alle foto's van de schijf en uit de database
         foreach ($scooter->photos as $photo) {
             Storage::disk('public')->delete($photo->path);
             $photo->delete();
@@ -201,8 +267,10 @@ class ScooterController extends Controller
             Storage::disk('public')->delete($scooter->image);
         }
         
+        // Verwijder de scooter uit de database
         $scooter->delete();
         
+        // Redirect naar de index pagina met een succesbericht
         return redirect()->route('scooters.index')
             ->with('success', __('messages.scooter_deleted'));
     }

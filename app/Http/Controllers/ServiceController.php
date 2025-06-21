@@ -6,10 +6,22 @@ use App\Models\Service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
+/**
+ * ServiceController
+ * 
+ * Deze controller behandelt alle acties met betrekking tot diensten in het systeem,
+ * inclusief het weergeven, aanmaken, bewerken en verwijderen van diensten.
+ * Diensten zijn services die Lerox Motoren aanbiedt, zoals onderhoud, reparaties en afstellingen.
+ */
 class ServiceController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Toon een lijst van alle diensten
+     * 
+     * Deze methode haalt alle diensten op uit de database, sorteert ze op naam
+     * en pagineert de resultaten met 12 diensten per pagina om de prestaties te optimaliseren.
+     * 
+     * @return \Illuminate\View\View
      */
     public function index()
     {
@@ -18,7 +30,12 @@ class ServiceController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Toon het formulier voor het aanmaken van een nieuwe dienst
+     * 
+     * Deze methode toont het formulier waarmee een beheerder een nieuwe dienst kan toevoegen.
+     * Alleen geautoriseerde gebruikers kunnen deze pagina bekijken (afgehandeld door middleware).
+     * 
+     * @return \Illuminate\View\View
      */
     public function create()
     {
@@ -26,7 +43,21 @@ class ServiceController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Sla een nieuw aangemaakte dienst op in de database
+     * 
+     * Deze methode valideert eerst alle ingevoerde gegevens volgens de opgegeven regels.
+     * Vervolgens wordt een nieuwe dienst aangemaakt met de gevalideerde gegevens.
+     * Als er een afbeelding is geüpload, wordt deze opgeslagen en gekoppeld aan de dienst.
+     * 
+     * Validatieregels:
+     * - name: verplicht, tekst, maximaal 255 tekens
+     * - description: verplicht, tekst
+     * - price: verplicht, numeriek, minimaal 0
+     * - duration: verplicht, geheel getal, minimaal 0 (tijd in minuten)
+     * - image: optioneel, afbeelding, maximaal 2MB
+     * 
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
@@ -44,14 +75,23 @@ class ServiceController extends Controller
             $validated['image'] = $imagePath;
         }
         
+        // Maak de nieuwe dienst aan
         Service::create($validated);
         
+        // Redirect naar de index pagina met een succesbericht
         return redirect()->route('services.index')
             ->with('success', __('messages.service_created'));
     }
 
     /**
-     * Display the specified resource.
+     * Toon de gespecificeerde dienst
+     * 
+     * Deze methode toont de detailpagina van een specifieke dienst.
+     * Hier kunnen gebruikers alle informatie over de dienst bekijken,
+     * zoals naam, beschrijving, prijs, duur en eventuele afbeelding.
+     * 
+     * @param  \App\Models\Service  $service  De te tonen dienst
+     * @return \Illuminate\View\View
      */
     public function show(Service $service)
     {
@@ -59,7 +99,13 @@ class ServiceController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Toon het formulier voor het bewerken van een dienst
+     * 
+     * Deze methode toont het formulier waarmee een beheerder een bestaande dienst kan bewerken.
+     * Alleen geautoriseerde gebruikers kunnen deze pagina bekijken (afgehandeld door middleware).
+     * 
+     * @param  \App\Models\Service  $service  De te bewerken dienst
+     * @return \Illuminate\View\View
      */
     public function edit(Service $service)
     {
@@ -67,7 +113,22 @@ class ServiceController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Werk de gespecificeerde dienst bij in de database
+     * 
+     * Deze methode valideert eerst alle ingevoerde gegevens volgens de opgegeven regels.
+     * Vervolgens wordt de bestaande dienst bijgewerkt met de gevalideerde gegevens.
+     * Als er een nieuwe afbeelding is geüpload, wordt de oude verwijderd en de nieuwe opgeslagen.
+     * 
+     * Validatieregels:
+     * - name: verplicht, tekst, maximaal 255 tekens
+     * - description: verplicht, tekst
+     * - price: verplicht, numeriek, minimaal 0
+     * - duration: verplicht, geheel getal, minimaal 0 (tijd in minuten)
+     * - image: optioneel, afbeelding, maximaal 2MB
+     * 
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Service  $service  De bij te werken dienst
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, Service $service)
     {
@@ -90,14 +151,24 @@ class ServiceController extends Controller
             $validated['image'] = $imagePath;
         }
         
+        // Update de dienst met de gevalideerde gegevens
         $service->update($validated);
         
+        // Redirect naar de index pagina met een succesbericht
         return redirect()->route('services.index')
             ->with('success', __('messages.service_updated'));
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Verwijder de gespecificeerde dienst uit de database
+     * 
+     * Deze methode verwijdert een dienst en alle bijbehorende gegevens uit het systeem.
+     * Eerst wordt de gekoppelde afbeelding verwijderd van de schijf (indien aanwezig).
+     * Daarna wordt de dienst zelf verwijderd. De methode zorgt ervoor dat er geen
+     * weesbestanden achterblijven in het systeem.
+     * 
+     * @param  \App\Models\Service  $service  De te verwijderen dienst
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Service $service)
     {
@@ -106,8 +177,10 @@ class ServiceController extends Controller
             Storage::disk('public')->delete($service->image);
         }
         
+        // Verwijder de dienst uit de database
         $service->delete();
         
+        // Redirect naar de index pagina met een succesbericht
         return redirect()->route('services.index')
             ->with('success', __('messages.service_deleted'));
     }
