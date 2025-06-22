@@ -32,7 +32,7 @@ Berkay Onal | 19 juni 2025
 ### Voortgangsbewaking
 - Dagelijkse voortgangsregistratie met burn-down chart
 - Prioritering volgens MoSCoW-methode
-- Systematisch bijhouden van openstaande taken
+- Bijhouden van openstaande taken
 - Dagelijkse stand-up methodiek voor zelforganisatie
 
 ---

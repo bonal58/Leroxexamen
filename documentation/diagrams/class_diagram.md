@@ -2,7 +2,7 @@
 
 ## Hoofdklassen
 
-### User
+### User 
 - **Attributen:**
   - id: int
   - name: string
