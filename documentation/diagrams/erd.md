@@ -1,101 +1,88 @@
+# Entity Relationship Diagram (ERD)
+
+Dit diagram toont de belangrijkste entiteiten in de database en hun relaties.
+
 ```mermaid
 erDiagram
-    User ||--o{ Order : "places"
+    User ||--o{ Order : "plaatst"
     User {
-        int id PK
-        string name
-        string email
-        string password
-        string role
-        timestamp created_at
-        timestamp updated_at
+        id PK
+        name
+        email
+        role
     }
     
-    Scooter ||--o{ Photo : "has"
-    Scooter ||--o{ Order_Item : "included in"
-    Scooter }o--o{ Part : "compatible with"
+    Scooter ||--o{ Photo : "heeft"
+    Scooter ||--o{ Order_Item : "in bestelling"
+    Scooter }o--o{ Part : "compatibel met"
     Scooter {
-        int id PK
-        string name
-        string brand
-        string model
-        int year
-        decimal price
-        string description
-        string color
-        int stock
-        boolean featured
-        timestamp created_at
-        timestamp updated_at
+        id PK
+        name
+        brand
+        model
+        year
+        price
+        color
+        stock
     }
     
-    Part ||--o{ Photo : "has"
-    Part ||--o{ Order_Item : "included in"
+    Part ||--o{ Photo : "heeft"
+    Part ||--o{ Order_Item : "in bestelling"
     Part {
-        int id PK
-        string name
-        string sku
-        string description
-        decimal price
-        int stock
-        timestamp created_at
-        timestamp updated_at
+        id PK
+        name
+        sku
+        price
+        stock
     }
     
-    Service ||--o{ Photo : "has"
-    Service ||--o{ Order_Item : "included in"
+    Service ||--o{ Photo : "heeft"
+    Service ||--o{ Order_Item : "in bestelling"
     Service {
-        int id PK
-        string name
-        string description
-        decimal price
-        int duration
-        string category
-        decimal price_range_min
-        decimal price_range_max
-        timestamp created_at
-        timestamp updated_at
+        id PK
+        name
+        price
+        duration
+        category
     }
     
-    Order ||--o{ Order_Item : "contains"
+    Order ||--o{ Order_Item : "bevat"
     Order {
-        int id PK
-        int user_id FK
-        decimal total_amount
-        string status
-        timestamp created_at
-        timestamp updated_at
+        id PK
+        user_id FK
+        total_amount
+        status
     }
     
     Order_Item {
-        int id PK
-        int order_id FK
-        string orderable_type
-        int orderable_id
-        int quantity
-        decimal price
-        timestamp created_at
-        timestamp updated_at
+        id PK
+        order_id FK
+        orderable_type
+        orderable_id
+        quantity
+        price
     }
     
     Photo {
-        int id PK
-        string photoable_type
-        int photoable_id
-        string path
-        boolean is_primary
-        timestamp created_at
-        timestamp updated_at
-    }
-    
-    Quote_Request {
-        int id PK
-        string name
-        string email
-        string phone
-        string message
-        boolean processed
-        timestamp created_at
-        timestamp updated_at
+        id PK
+        photoable_type
+        photoable_id
+        path
+        is_primary
     }
 ```
+
+## Uitleg van de relaties
+
+- **User - Order**: Een gebruiker kan meerdere bestellingen plaatsen
+- **Scooter - Photo**: Een scooter kan meerdere foto's hebben
+- **Part - Photo**: Een onderdeel kan meerdere foto's hebben
+- **Service - Photo**: Een dienst kan meerdere foto's hebben
+- **Scooter - Part**: Scooters en onderdelen hebben een veel-op-veel relatie (compatibiliteit)
+- **Order - Order_Item**: Een bestelling bevat meerdere bestelitems
+- **Order_Item - (Scooter/Part/Service)**: Een bestelitem kan verwijzen naar een scooter, onderdeel of dienst
+
+## Polymorfische relaties
+
+- **Photo**: Heeft een polymorfische relatie met Scooter, Part en Service via `photoable_type` en `photoable_id`
+- **Order_Item**: Heeft een polymorfische relatie met Scooter, Part en Service via `orderable_type` en `orderable_id`

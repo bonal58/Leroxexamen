@@ -1,119 +1,87 @@
 # Architectuur Diagram - Lerox Motoren
 
-## MVC Architectuur
+## MVC Architectuur Uitleg
+
+De Lerox Motoren applicatie gebruikt het MVC (Model-View-Controller) patroon, wat een standaard is in Laravel. Hieronder zie je een vereenvoudigd diagram van hoe dit werkt:
 
 ```mermaid
 graph TD
-    subgraph Client
-        Browser["Browser (HTML/CSS/JS)"]
-    end
-    
-    subgraph Laravel_Framework
-        subgraph Presentation_Layer
-            Routes["Routes"]
-            Views["Blade Views"]
-            Controllers["Controllers"]
-        end
-        
-        subgraph Business_Layer
-            Services["Services"]
-            Models["Models"]
-            Events["Events"]
-            Listeners["Listeners"]
-        end
-        
-        subgraph Data_Layer
-            Repositories["Repositories"]
-            Eloquent["Eloquent ORM"]
-            DB["Database Queries"]
-        end
-    end
-    
-    subgraph External_Services
-        Storage["File Storage"]
-        Email["Email Service"]
-        Payment["Payment Gateway"]
-    end
-    
-    subgraph Database
-        MySQL["MySQL Database"]
-    end
-    
-    Browser <--> Routes
-    Routes --> Controllers
-    Controllers --> Services
-    Controllers --> Views
+    Browser["Browser (Gebruiker)"] <--> Routes["Routes (URL's)"] 
+    Routes --> Controllers["Controllers (Verwerken verzoeken)"] 
+    Controllers --> Models["Models (Data & Logica)"] 
+    Models --> Database["Database (MySQL)"] 
+    Controllers --> Views["Views (Blade Templates)"] 
     Views --> Browser
-    
-    Services --> Models
-    Services --> Repositories
-    Models --> Eloquent
-    Repositories --> Eloquent
-    Eloquent --> DB
-    DB --> MySQL
-    
-    Controllers --> Events
-    Events --> Listeners
-    
-    Services --> External_Services
-    Controllers --> External_Services
 ```
 
-## Architectuur Componenten
+## Wat doet elk onderdeel?
 
-### Presentation Layer
-- **Routes**: Definieert URL-routes en verbindt ze met controller-acties
-- **Controllers**: Verwerkt HTTP-verzoeken, roept services aan en geeft antwoorden terug
-- **Blade Views**: Sjablonen voor het genereren van HTML-weergaven
+### 1. Browser
+Dit is waar de gebruiker de website bezoekt. De browser stuurt verzoeken naar de server en toont de resultaten.
 
-### Business Layer
-- **Services**: Bevat bedrijfslogica en coördineert tussen controllers en data layer
-- **Models**: Representeert domeinentiteiten en hun relaties
-- **Events & Listeners**: Implementeert event-driven architectuur voor losgekoppelde functionaliteit
+### 2. Routes
+Routes bepalen welke URL naar welke controller-actie gaat. Bijvoorbeeld:
+- `/scooters` → ScooterController@index
+- `/scooters/1` → ScooterController@show
 
-### Data Layer
-- **Repositories**: Abstraheert data-toegang en -manipulatie
-- **Eloquent ORM**: Object-Relational Mapping voor database-interacties
-- **Database Queries**: Raw SQL en query builder voor complexe queries
+### 3. Controllers
+Controllers ontvangen verzoeken, werken met models om data op te halen of te wijzigen, en geven views terug. Ze zijn als verkeersregelaars die bepalen wat er moet gebeuren.
 
-### External Services
-- **File Storage**: Voor het opslaan van afbeeldingen en documenten
-- **Email Service**: Voor het verzenden van e-mails naar klanten
-- **Payment Gateway**: Voor het verwerken van betalingen
+### 4. Models
+Models vertegenwoordigen de data en bedrijfslogica. Ze werken direct met de database en bevatten regels over hoe data moet worden opgeslagen en opgehaald.
 
-## Dataflow
+### 5. Views
+Views zijn de templates die HTML genereren. Ze tonen de data aan de gebruiker op een mooie manier.
 
-1. De browser stuurt een HTTP-verzoek naar de applicatie
-2. Routes leiden het verzoek naar de juiste controller-actie
-3. De controller roept services aan om bedrijfslogica uit te voeren
-4. Services gebruiken repositories en models om data te manipuleren
-5. Eloquent ORM vertaalt model-operaties naar database-queries
-6. De controller geeft een response terug, meestal via een Blade view
-7. De browser ontvangt en toont de HTML-response
+### 6. Database
+Hier wordt alle data opgeslagen (gebruikers, scooters, onderdelen, etc.).
 
-## Beveiligingslagen
+## Hoe werkt een typisch verzoek?
 
 ```mermaid
-graph TD
-    Request["HTTP Request"]
-    Middleware["Middleware Stack"]
-    Auth["Authentication"]
-    CSRF["CSRF Protection"]
-    Validation["Request Validation"]
-    Controller["Controller"]
-    Response["HTTP Response"]
+sequenceDiagram
+    participant Gebruiker
+    participant Browser
+    participant Server as Laravel Server
+    participant Controller
+    participant Model
+    participant Database
+    participant View
     
-    Request --> Middleware
-    Middleware --> Auth
-    Auth --> CSRF
-    CSRF --> Validation
-    Validation --> Controller
-    Controller --> Response
+    Gebruiker->>Browser: Klikt op "Alle Scooters"
+    Browser->>Server: GET /scooters
+    Server->>Controller: Roept ScooterController@index aan
+    Controller->>Model: Vraagt alle scooters op
+    Model->>Database: SELECT * FROM scooters
+    Database-->>Model: Scooter data
+    Model-->>Controller: Scooter collectie
+    Controller->>View: Geeft data door aan view
+    View-->>Controller: Gegenereerde HTML
+    Controller-->>Browser: Stuurt HTML terug
+    Browser-->>Gebruiker: Toont scooterlijst
 ```
 
-1. **Middleware Stack**: Verwerkt het verzoek vóór het de controller bereikt
-2. **Authentication**: Controleert gebruikersidentiteit en autorisatie
-3. **CSRF Protection**: Voorkomt Cross-Site Request Forgery aanvallen
-4. **Request Validation**: Valideert invoergegevens volgens gedefinieerde regels
-5. **Controller**: Verwerkt het gevalideerde verzoek
-6. **Response**: Genereert een HTTP-antwoord
+## Speciale Laravel Features
+
+### Middleware
+Middleware werkt als een filter tussen de browser en je controllers. Het kan verzoeken controleren en eventueel blokkeren. Bijvoorbeeld:
+- Controleren of een gebruiker is ingelogd
+- Beschermen tegen CSRF-aanvallen (Cross-Site Request Forgery)
+
+### Eloquent ORM
+Eloquent maakt het werken met de database eenvoudiger. In plaats van SQL te schrijven, gebruik je PHP-objecten:
+
+```php
+// In plaats van: SELECT * FROM scooters WHERE brand = 'Lerox'
+$scooters = Scooter::where('brand', 'Lerox')->get();
+```
+
+### Blade Templates
+Blade is het template systeem van Laravel. Het maakt het eenvoudig om dynamische inhoud in HTML te tonen:
+
+```php
+<!-- Toon alle scooters -->
+@foreach($scooters as $scooter)
+    <div>{{ $scooter->name }} - € {{ $scooter->price }}</div>
+@endforeach
+```
