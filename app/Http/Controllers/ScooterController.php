@@ -63,7 +63,7 @@ class ScooterController extends Controller
      * - color: verplicht, tekst, maximaal 255 tekens
      * - stock: verplicht, geheel getal, minimaal 0
      * - photos: optioneel, array
-     * - photos.*: afbeelding, maximaal 2MB
+     * - photos.*: bestand, ondersteunde formaten: jpeg, png, jpg, gif, pdf, doc, docx, xls, xlsx, maximaal 5MB
      * - featured: boolean
      * 
      * @param  \Illuminate\Http\Request  $request
@@ -81,7 +81,7 @@ class ScooterController extends Controller
             'color' => 'required|string|max:255',
             'stock' => 'required|integer|min:0',
             'photos' => 'nullable|array',
-            'photos.*' => 'image|max:2048',
+            'photos.*' => 'file|mimes:jpeg,png,jpg,gif,pdf,doc,docx,xls,xlsx|max:5120',
             'featured' => 'boolean',
         ]);
         
@@ -177,7 +177,7 @@ class ScooterController extends Controller
             'color' => 'required|string|max:255',
             'stock' => 'required|integer|min:0',
             'photos' => 'nullable|array',
-            'photos.*' => 'image|max:2048',
+            'photos.*' => 'file|mimes:jpeg,png,jpg,gif,pdf,doc,docx,xls,xlsx|max:5120',
             'featured' => 'boolean',
             'delete_photos' => 'nullable|array',
             'delete_photos.*' => 'integer|exists:photos,id',
@@ -202,7 +202,7 @@ class ScooterController extends Controller
             }
         }
         
-        // Verwerk de nieuwe foto's als deze zijn geüpload
+        // Verwerk nieuwe foto's als deze zijn geüpload
         if ($request->hasFile('photos')) {
             $order = $scooter->photos()->max('order') + 1;
             $maxPhotos = $request->input('max_photos', 10); // Default to 10 if not specified
@@ -220,22 +220,22 @@ class ScooterController extends Controller
                 // Sla de foto op in de database
                 $scooter->photos()->create([
                     'path' => $path,
-                    'is_primary' => false, // Standaard niet primair
+                    'is_primary' => false,
                     'order' => $order++,
                 ]);
             }
         }
         
-        // Update de primaire foto als deze is geselecteerd
+        // Update primaire foto indien geselecteerd
         if ($request->has('primary_photo')) {
-            // Reset alle primaire foto's
+            // Reset alle foto's naar niet-primair
             $scooter->photos()->update(['is_primary' => false]);
             
-            // Zet de geselecteerde foto als primair
-            $photo = Photo::find($request->primary_photo);
-            if ($photo && $photo->photoable_id == $scooter->id) {
-                $photo->update(['is_primary' => true]);
-                $scooter->update(['image' => $photo->path]); // Voor backward compatibility
+            // Stel de geselecteerde foto in als primair
+            $primaryPhoto = $scooter->photos()->find($request->primary_photo);
+            if ($primaryPhoto) {
+                $primaryPhoto->update(['is_primary' => true]);
+                $scooter->update(['image' => $primaryPhoto->path]);
             }
         }
         
@@ -246,31 +246,23 @@ class ScooterController extends Controller
     /**
      * Verwijder de gespecificeerde scooter uit de database
      * 
-     * Deze methode verwijdert een scooter en alle bijbehorende gegevens uit het systeem.
-     * Eerst worden alle gekoppelde foto's verwijderd van de schijf en uit de database.
-     * Daarna wordt de scooter zelf verwijderd. De methode zorgt ervoor dat er geen
-     * weesbestanden of -records achterblijven in het systeem.
+     * Deze methode verwijdert een scooter en alle bijbehorende foto's uit het systeem.
+     * Eerst worden de foto's van de schijf verwijderd, daarna de scooter uit de database.
      * 
-     * @param  \App\Models\Scooter  $scooter  De te verwijderen scooter
+     * @param  \App\Models\Scooter  $scooter
      * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Scooter $scooter)
     {
-        // Verwijder alle foto's van de schijf en uit de database
+        // Verwijder alle foto's van de scooter
         foreach ($scooter->photos as $photo) {
             Storage::disk('public')->delete($photo->path);
             $photo->delete();
         }
         
-        // Verwijder de oude afbeelding als deze bestaat (voor backward compatibility)
-        if ($scooter->image) {
-            Storage::disk('public')->delete($scooter->image);
-        }
-        
-        // Verwijder de scooter uit de database
+        // Verwijder de scooter
         $scooter->delete();
         
-        // Redirect naar de index pagina met een succesbericht
         return redirect()->route('scooters.index')
             ->with('success', __('messages.scooter_deleted'));
     }

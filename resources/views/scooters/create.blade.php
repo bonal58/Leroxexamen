@@ -112,6 +112,7 @@
                             <div class="form-text">{{ __('messages.image_requirements') }}</div>
                             <div class="form-text">{{ __('messages.first_photo_primary') }}</div>
                             <div class="form-text" id="photoLimitMessage">You can upload up to 5 photos.</div>
+                            <div class="form-text">Ondersteunde bestandsformaten: JPEG, PNG, GIF, PDF, DOC, DOCX, XLS, XLSX (max 5MB)</div>
                             @error('photos.*')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
