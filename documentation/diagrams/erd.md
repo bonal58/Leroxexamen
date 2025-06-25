@@ -4,71 +4,71 @@ Dit diagram toont de belangrijkste entiteiten in de database en hun relaties.
 
 ```mermaid
 erDiagram
-    User ||--o{ Order : "plaatst"
+    User ||--o{ Order : plaatst
     User {
-        id PK
-        name
-        email
-        role
+        int id PK
+        string name
+        string email
+        string role
     }
     
-    Scooter ||--o{ Photo : "heeft"
+    Scooter ||--o{ Photo : heeft
     Scooter ||--o{ Order_Item : "in bestelling"
     Scooter }o--o{ Part : "compatibel met"
     Scooter {
-        id PK
-        name
-        brand
-        model
-        year
-        price
-        color
-        stock
+        int id PK
+        string name
+        string brand
+        string model
+        int year
+        decimal price
+        string color
+        int stock
     }
     
-    Part ||--o{ Photo : "heeft"
+    Part ||--o{ Photo : heeft
     Part ||--o{ Order_Item : "in bestelling"
     Part {
-        id PK
-        name
-        sku
-        price
-        stock
+        int id PK
+        string name
+        string sku
+        decimal price
+        int stock
     }
     
-    Service ||--o{ Photo : "heeft"
+    Service ||--o{ Photo : heeft
     Service ||--o{ Order_Item : "in bestelling"
     Service {
-        id PK
-        name
-        price
-        duration
-        category
+        int id PK
+        string name
+        decimal price
+        int duration
+        string category
     }
     
-    Order ||--o{ Order_Item : "bevat"
+    Order ||--o{ Order_Item : bevat
     Order {
-        id PK
-        user_id FK
-        total_amount
-        status
+        int id PK
+        int user_id FK
+        decimal total_amount
+        string status
     }
     
     Order_Item {
-        id PK
-        order_id FK
-        orderable_type
-        orderable_id
-        quantity
-        price
+        int id PK
+        int order_id FK
+        string orderable_type
+        int orderable_id
+        int quantity
+        decimal price
     }
     
     Photo {
-        id PK
-        photoable_type
-        photoable_id
-        path
-        is_primary
+        int id PK
+        string photoable_type
+        int photoable_id
+        string path
+        boolean is_primary
     }
 ```
 
